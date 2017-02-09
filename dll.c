@@ -218,5 +218,5 @@ void displayDLL(FILE *fp, dll *items)
         }
         items->display(fp,traversenode->value);
     }
-    fprintf(fp, "]\n");
+    fprintf(fp, "]");
 }

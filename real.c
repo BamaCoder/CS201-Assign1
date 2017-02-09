@@ -1,3 +1,7 @@
+/* Implementation of real.c, rewritten based off
+ * the implementation of integer.c written by
+ * Dr. John Lusth, modified by Bryant Hall */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
@@ -35,12 +39,6 @@ void
 displayReal(FILE *fp,void *v)
     {
     fprintf(fp,"%f",getReal((real *) v));
-    }
-
-int
-compareReal(void *v,void *w)
-    {
-    return ((real *) v)->value - ((real *) w)->value;
     }
 
 void

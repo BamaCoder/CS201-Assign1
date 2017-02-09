@@ -1,3 +1,8 @@
+/* Implementation of integer.c, credit to Dr. John Lusth */
+
+
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
@@ -35,12 +40,6 @@ void
 displayInteger(FILE *fp,void *v)
     {
     fprintf(fp,"%d",getInteger((integer *) v));
-    }
-
-int
-compareInteger(void *v,void *w)
-    {
-    return ((integer *) v)->value - ((integer *) w)->value;
     }
 
 void

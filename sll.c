@@ -163,5 +163,5 @@ void displaySLL(FILE *fp, sll *items)
       }
     items->display(fp,traversenode->value);
   }
-  fprintf(fp, "]\n");
+  fprintf(fp, "]");
 }

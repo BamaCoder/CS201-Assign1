@@ -1,3 +1,5 @@
+/* Implementation of integer.h, credit to Dr. John Lusth */
+
 #include <stdio.h>
 
 #ifndef __INTEGER_INCLUDED__

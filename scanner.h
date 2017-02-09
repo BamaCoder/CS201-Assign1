@@ -1,3 +1,5 @@
+/* Written by Dr. John Lusth */
+
 #include <stdio.h>
 
 #ifndef SCANNER_H
