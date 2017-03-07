@@ -1,5 +1,7 @@
 /* Sqsort.c - reads in and implements a sorting mechanism using two queues and a stack, printing each iteration through the stack
  *
+ * All tests created used were created by David McCoy and Jake Mizzell.
+ *
  * Code written, implemented, and tested by Bryant M. Hall, Senior at the University of Alabama 
  * Credit is given where credit is due. Copyright 2017 */ 
 
@@ -44,7 +46,7 @@ queue *readQueue(FILE *fp, Printer p, char type) {
 
 
 /* Recursive function that sorts using an input queue using two queues and a stack for arbitrary data types*/
-void sortQueue(queue* input, Comparator comp, Printer disp) {
+void sortQueue(queue* input, Comparator comp, Printer disp, int numexecs) {
   queue *output = newQueue(disp);
   stack *s = newStack(disp);
   int sorted = 1; // flag for whether to keep recursing or not (checks if sorted)
@@ -55,20 +57,25 @@ void sortQueue(queue* input, Comparator comp, Printer disp) {
     if(sizeStack(s) > 0 && (sizeQueue(input) == 0 || comp(peekQueue(input), peekStack(s)) <= 0)) enqueue(output,pop(s)); // pop from stack, enqueue output
     else {
       temp = dequeue(input);
-      if(sizeQueue(input) == 0 || comp(temp,peekQueue(input)) > 0) enqueue(output,temp); // dequeue from input, enqueue output
+      if(sizeQueue(input) == 0 || comp(temp,peekQueue(input)) >= 0) enqueue(output,temp); // dequeue from input, enqueue output
       else { // dequeue from input, push stack
-        push(s, temp);  
+        push(s, temp);
         sorted = 0;
       }
     }
   }
   if(sorted) {
+    if(numexecs == 1) {
+      displayQueue(stdout, output);
+      fprintf(stdout, "\n");
+    }
     return;
   }
   else {
     free(input);  // Clear memory of empty stacks and queues
     free(s);
-    sortQueue(output, comp, disp);
+    numexecs++;
+    sortQueue(output, comp, disp, numexecs);
   }
 }
 
@@ -106,11 +113,7 @@ int main(int argc, char* argv[]) {
         fp = fopen(argv[2], "r");
       }
       queue *input = readQueue(fp, print, argv[1][1]); // Reads in Queue
-      if(sizeQueue(input) == 0) {
-        displayQueue(stdout, input);
-        fprintf(stdout, "\n");
-      }
-      sortQueue(input, comp, print);                   // Sorts and Prints Queue
+      sortQueue(input, comp, print, 1);                   // Sorts and Prints Queue
     }
     else {
       printf("Invalid input. Please input using the format 'sqsort -<flag> <optional filename>'.\n");

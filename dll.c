@@ -151,14 +151,22 @@ void *removeDLL(dll *items, int index)
 /* Combines two lists into a single list, Donor is set to be an empty list. */
 void unionDLL(dll *recipient, dll *donor)
 {
-    if(recipient->head == 0 && donor->head != 0) recipient = donor;
+    if(recipient->head == 0 && donor->head != 0) {
+      recipient->head = donor->head;
+      recipient->tail = donor->tail;
+      recipient->size = donor->size;
+      donor->head = donor->tail = 0;
+      donor->size = 0;
+    }
     else if(donor->head == 0) return;
-    recipient->tail->next = donor->head;
-    donor->head->prev = recipient->tail;
-    recipient->tail = donor->tail;
-    recipient->size += donor->size;
-    donor->head = donor->tail = 0;
-    donor->size = 0;
+    else {
+      recipient->tail->next = donor->head;
+      donor->head->prev = recipient->tail;
+      recipient->tail = donor->tail;
+      recipient->size += donor->size;
+      donor->head = donor->tail = 0;
+      donor->size = 0;
+    }
 }
 
 /* Retrieves and returns the value of the node at the specified location */

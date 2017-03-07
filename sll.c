@@ -105,13 +105,21 @@ void *removeSLL(sll *items, int index)
 /* Combines the two lists into the recipient list */
 void unionSLL(sll *recipient, sll*donor)
 {
-  if(recipient->head == 0 && donor->head != 0) recipient = donor;
+  if(recipient->head == 0 && donor->head != 0) {
+    recipient->head = donor->head;
+    recipient->tail = donor->tail;
+    recipient->size = donor->size;
+    donor->head = donor->tail = 0;
+    donor->size = 0;
+  }
   else if(donor->head == 0) return;
-  recipient->tail->next = donor->head;
-  recipient->tail = donor->tail;
-  recipient->size += donor->size;
-  donor->head = donor->tail = 0;
-  donor->size = 0;
+  else {
+    recipient->tail->next = donor->head;
+    recipient->tail = donor->tail;
+    recipient->size += donor->size;
+    donor->head = donor->tail = 0;
+    donor->size = 0;
+  }
 }
 
 /* Retrieves the value of a node at a specified index in the list */
